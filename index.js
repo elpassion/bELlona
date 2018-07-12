@@ -1,3 +1,6 @@
+require('dotenv').config();
+const slack = require('./slack_messenger');
+
 const http = require('http');
 const DOMParser = require('xmldom').DOMParser;
 const parser = new DOMParser();
@@ -40,5 +43,6 @@ function objectFromRow(row) {
 }
 
 getMenu(function (menu) {
-  console.log(menu)
+  slack.deliverMessage(menu);
 });
+
