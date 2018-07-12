@@ -1,13 +1,10 @@
 require('dotenv').config();
 const slack = require('./slack_messenger');
-
-const request = require('request');
-const iconv = require('iconv');
-const DOMParser = require('xmldom').DOMParser;
-const parser = new DOMParser();
+const repository = require('./repository');
+const presenter = require('./menu_presenter');
 
 function getMenu(callback) {
-  return getDOMResponse('http://www.bufetmago.dwb.pl', function (content) {
+  return repository.getDOMResponse('http://www.bufetmago.dwb.pl', function (content) {
     const rows = content.getElementsByTagName('table')[1].getElementsByTagName('tr');
     let menu = [];
     for (let i = 0; i < rows.length; i++) {
@@ -17,16 +14,6 @@ function getMenu(callback) {
       }
     }
     callback(menu);
-  });
-}
-
-function getDOMResponse(url, callback) {
-  request({
-    uri: url,
-    encoding: null
-  }, function(error, response, body) {
-    const content = parser.parseFromString(toUTF8(body), 'text/html');
-    callback(content)
   });
 }
 
@@ -40,19 +27,6 @@ function objectFromRow(row) {
   }
 }
 
-function toUTF8(body) {
-  const ic = new iconv.Iconv('latin2', 'utf-8');
-  const buf = ic.convert(body);
-  return buf.toString('utf-8');
-}
-
-function arrayToMarkdown(array) {
-  return array.map(function (item) {
-    return `*${item.name}* ${item.price},-`;
-  }).join("\n");
-}
-
 getMenu(function (menu) {
-  slack.deliverMessage(arrayToMarkdown(menu));
+  slack.deliverMessage(presenter.present(menu));
 });
-
