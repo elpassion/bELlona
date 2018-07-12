@@ -1,7 +1,8 @@
 require('dotenv').config();
 const slack = require('./slack_messenger');
 
-const http = require('http');
+const request = require('request');
+const iconv = require('iconv');
 const DOMParser = require('xmldom').DOMParser;
 const parser = new DOMParser();
 
@@ -20,15 +21,12 @@ function getMenu(callback) {
 }
 
 function getDOMResponse(url, callback) {
-  return http.get(url, function (response) {
-    let body = '';
-    response.on('data', function (d) {
-      body += d;
-    });
-    response.on('end', function () {
-      const content = parser.parseFromString(body, 'text/html');
-      callback(content)
-    });
+  request({
+    uri: url,
+    encoding: 'binary'
+    }, function(error, response, body){
+    const content = parser.parseFromString(body.toString(), 'text/html');
+    callback(content)
   });
 }
 
@@ -40,6 +38,13 @@ function objectFromRow(row) {
     name: cells[0].textContent,
     price: parseFloat(cells[1].textContent),
   }
+}
+
+function toUTF8(body) {
+  // convert from iso-8859-1 to utf-8
+  var ic = new iconv.Iconv('ISO-8859-2', 'UTF-8');
+  var buf = ic.convert(body);
+  return buf.toString('UTF-8');
 }
 
 getMenu(function (menu) {
