@@ -1,0 +1,9 @@
+{
+  "name": "bellona",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:elpassion/bELlona.git",
+  "author": "Katarzyna Laszczewska <katarzyna.laszczewska@gmail.com>",
+  "license": "MIT",
+  "private": false
+}
