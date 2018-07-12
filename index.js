@@ -35,18 +35,24 @@ function objectFromRow(row) {
   if (cells.length !== 2) return null;
 
   return {
-    name: cells[0].textContent,
+    name: cells[0].textContent.replace(/\r/g,"").replace(/\n/g," "),
     price: parseFloat(cells[1].textContent),
   }
 }
 
 function toUTF8(body) {
   const ic = new iconv.Iconv('latin2', 'utf-8');
-  const buf = ic.convert(body)
+  const buf = ic.convert(body);
   return buf.toString('utf-8');
 }
 
+function arrayToMarkdown(array) {
+  return array.map(function (item) {
+    return `*${item.name}* ${item.price},-`;
+  }).join("\n");
+}
+
 getMenu(function (menu) {
-  slack.deliverMessage(menu);
+  slack.deliverMessage(arrayToMarkdown(menu));
 });
 

@@ -6,7 +6,7 @@ const conversationId = 'CBQGW3P9C';
 
 module.exports = {
   deliverMessage: function(message){
-    web.chat.postMessage({ channel: conversationId, text: message })
+    web.chat.postMessage({ channel: conversationId, text: message, mrkdwn: true })
       .then((res) => {
         console.log('Message sent: ', res.ts);
       })
