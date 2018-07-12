@@ -23,9 +23,9 @@ function getMenu(callback) {
 function getDOMResponse(url, callback) {
   request({
     uri: url,
-    encoding: 'binary'
-    }, function(error, response, body){
-    const content = parser.parseFromString(body.toString(), 'text/html');
+    encoding: null
+  }, function(error, response, body) {
+    const content = parser.parseFromString(toUTF8(body), 'text/html');
     callback(content)
   });
 }
@@ -41,10 +41,9 @@ function objectFromRow(row) {
 }
 
 function toUTF8(body) {
-  // convert from iso-8859-1 to utf-8
-  var ic = new iconv.Iconv('ISO-8859-2', 'UTF-8');
-  var buf = ic.convert(body);
-  return buf.toString('UTF-8');
+  const ic = new iconv.Iconv('latin2', 'utf-8');
+  const buf = ic.convert(body)
+  return buf.toString('utf-8');
 }
 
 getMenu(function (menu) {
