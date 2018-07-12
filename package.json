@@ -5,5 +5,8 @@
   "repository": "git@github.com:elpassion/bELlona.git",
   "author": "Katarzyna Laszczewska <katarzyna.laszczewska@gmail.com>",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "dependencies": {
+    "xmldom": "^0.1.27"
+  }
 }
