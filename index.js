@@ -9,7 +9,7 @@ function getMenu(callback) {
     let menu = [];
     for (let i = 0; i < rows.length; i++) {
       const item = objectFromRow(rows[i]);
-      if (item != null) {
+      if (item != null && item.relevant()) {
         menu.push(item);
       }
     }
@@ -24,6 +24,16 @@ function objectFromRow(row) {
   return {
     name: cells[0].textContent.replace(/\r/g,"").replace(/\n/g," "),
     price: parseFloat(cells[1].textContent),
+
+    relevant: function() {
+      let _this = this;
+
+      return this.ignored_phrases.reduce(function(is_relevant, phrase) {
+        return is_relevant && !phrase.test(_this.name);
+      }, true);
+    },
+
+    ignored_phrases: [/benefitlunch/i, /bufet zamknięty/i]
   }
 }
 
