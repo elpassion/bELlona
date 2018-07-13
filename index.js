@@ -28,7 +28,7 @@ function objectFromRow(row) {
     relevant: function() {
       let _this = this;
 
-      return this.ignored_phrases.reduce(function(is_relevant, phrase) {
+      return this.ignored_phrases.reduce((is_relevant, phrase) => {
         return is_relevant && !phrase.test(_this.name);
       }, true);
     },

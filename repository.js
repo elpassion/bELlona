@@ -4,11 +4,11 @@ const DOMParser = require('xmldom').DOMParser;
 const parser = new DOMParser();
 
 module.exports = {
-  getDOMResponse: function(url, callback) {
+  getDOMResponse: (url, callback) => {
     request({
       uri: url,
       encoding: null
-    }, function(error, response, body) {
+    }, (error, response, body) => {
       const content = parser.parseFromString(toUTF8(body), 'text/html');
       callback(content)
     });
