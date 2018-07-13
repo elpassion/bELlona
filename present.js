@@ -7,6 +7,7 @@ module.exports = function present(menu) {
   let menuItems = menu.items.map(item => {
     return `:${item.emoji()}:   *${item.name}* ${item.price},-`;
   }).join("\n");
+  let menuFooter = '\n\n:phone: 22 45 70 368 :phone:';
 
-  return menuHeader + menuItems;
+  return menuHeader + menuItems + menuFooter;
 };
