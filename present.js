@@ -3,9 +3,9 @@ function formatDate(date) {
 }
 
 module.exports = function present(menu) {
-  let menuHeader = `Menu dla dnia ${formatDate(menu.date)}\n`;
+  let menuHeader = `:dumpling: :fried_egg: :poultry_leg: Menu dla dnia *${formatDate(menu.date)}* :fried_egg: :poultry_leg: :dumpling: \n`;
   let menuItems = menu.items.map(item => {
-    return `*${item.name}* ${item.price},-`;
+    return `:${item.emoji()}:   *${item.name}* ${item.price},-`;
   }).join("\n");
 
   return menuHeader + menuItems;
