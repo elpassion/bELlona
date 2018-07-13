@@ -1,5 +1,6 @@
 require('dotenv').config();
-const redis = require("redis"), client = redis.createClient();
+const redis = require("redis"),
+      client = redis.createClient(process.env.REDIS_URL);
 
 const deliverMessage = require('./deliver_message');
 const fetchContent = require('./fetch_content');
