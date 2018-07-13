@@ -3,16 +3,14 @@ const iconv = require('iconv');
 const DOMParser = require('xmldom').DOMParser;
 const parser = new DOMParser();
 
-module.exports = {
-  getDOMResponse: (url, callback) => {
-    request({
-      uri: url,
-      encoding: null
-    }, (error, response, body) => {
-      const content = parser.parseFromString(toUTF8(body), 'text/html');
-      callback(content)
-    });
-  }
+module.exports = function fetchContent(url, callback) {
+  request({
+    uri: url,
+    encoding: null
+  }, (error, response, body) => {
+    const content = parser.parseFromString(toUTF8(body), 'text/html');
+    callback(content)
+  });
 };
 
 function toUTF8(body) {
