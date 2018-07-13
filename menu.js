@@ -3,4 +3,8 @@ module.exports = class Menu {
     this.date = date;
     this.items = items;
   }
+
+  empty() {
+    return this.items.length === 0;
+  }
 };

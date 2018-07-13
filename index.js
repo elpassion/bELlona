@@ -14,7 +14,7 @@ function getMenu(callback) {
 
 getMenu(function (menu) {
   client.get("last menu date", function(err, value){
-    if (value !== menu.date.toString()) {
+    if (value !== menu.date.toString() && !menu.empty()) {
       deliverMessage(present(menu));
       client.set("last menu date", menu.date)
     }
