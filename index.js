@@ -25,7 +25,7 @@ function objectFromRow(row) {
     name: cells[0].textContent.replace(/\r/g,"").replace(/\n/g," "),
     price: parseFloat(cells[1].textContent),
 
-    relevant: function() {
+    relevant: () => {
       let _this = this;
 
       return this.ignored_phrases.reduce((is_relevant, phrase) => {
