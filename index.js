@@ -13,5 +13,10 @@ function getMenu(callback) {
 }
 
 getMenu(function (menu) {
-  deliverMessage(present(menu));
+  client.get("last menu date", function(err, value){
+    if (value !== menu.date.toString()) {
+      deliverMessage(present(menu));
+      client.set("last menu date", menu.date)
+    }
+  });
 });
