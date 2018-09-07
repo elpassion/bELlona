@@ -1,5 +1,5 @@
 require('dotenv').config();
-const redis = require("redis"), client = redis.createClient();
+const redis = require("redis"), client = redis.createClient(6379, "bellonaredis.pszliy.0001.euw1.cache.amazonaws.com");
 
 const deliverMessage = require('./deliver_message');
 const fetchContent = require('./fetch_content');
